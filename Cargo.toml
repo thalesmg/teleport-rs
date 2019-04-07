@@ -1,0 +1,18 @@
+[package]
+name = "teleport"
+version = "0.1.0"
+authors = ["Thales Macedo Garitezi <thalesmg@gmail.com>"]
+edition = "2018"
+include = ["fuck.sh"]
+
+[[bin]]
+name = "teleport-rs"
+path = "app/main.rs"
+
+[dependencies]
+clap = "2.33.0"
+serde = { version = "1.0.90", features = ["derive"] }
+serde_json = "1.0.39"
+failure = { version = "0.1.5", features = ["derive"] }
+failure_derive = "0.1.5"
+dirs = "1.0.5"
