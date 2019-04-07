@@ -1,0 +1,35 @@
+language: rust
+rust:
+  - stable
+
+addons:
+  apt:
+    update: true
+    packages:
+      - musl
+      - musl-dev
+      - musl-tools
+
+cache: cargo
+
+before_script:
+  - rustup target add x86_64-unknown-linux-musl
+
+script:
+  - make travis
+  - cp target/x86_64-unknown-linux-musl/release/teleport-rs src/teleport.sh ./
+  - sha256sum ./teleport-rs > teleport-rs.sha256.txt
+
+deploy:
+  provider: releases
+  api_key:
+      secure: jq+5ON/s26gFn5Kaknqmh4JutG7iKDg9ij91zqWOXVsEuJs3LoQF19lKFCPJRziG9GGBk7gOAXHw/LaSpUXUpZgXchViRThb9bnugW0xNS49V6oa4oNu6Z2N8RaaodfHPytqaUPnEn10ecetyfCNK1BpXWNk6xpWRnzsl985T4K9/NCvaBZeLu12uaN18M1t686p/HXO3DCNkOwhSKNqfRZIHMEZjRCQn0c7lBL8up4xaoI4AWraD5f6lX/eL5th9DOX5NwNNRB9BKm6U5uiKYSef94CkNrNIsrFNTMT6ZZLHKP/CxK92zSjeooc71DSBq1rJVrMvknK+GkpvDXihj63vJm+oEcBQ8euD2Z1EfQxKGRZoijhd2J3J88/sWgmxSjKaqI0v6tzQKIH2ZTZ8Xvdmz57wsQ0dQCfTboIqn8Xs17IUFlwI3DmD3+9Snh5u2HR5z9nXI32syr/jOOZjYRtZve0qSwh5av7qaiz3NTsm1tb9+IggcZ58X0l6k/VVwiGZi3L5PpfY6AmBRFWNZH9dPqOgo3vwlAQSHAVGjNM/Y5VRxMImWGl78iqoS9lRPZMAsvbSAOcb+bX2972slPhIBj1w2WIGtU5p1F7PiWWdHKhcx/AEGLD4LnV8b0AVMt0kX4SyH6SlpAtlVb7Z0Am4pqy+mtwVXFRhVLaBOE=
+  file:
+    - teleport-rs
+    - teleport-rs.sha256.txt
+    - teleport.sh
+  skip_cleanup: true
+  on:
+    repo: thalesmg/teleport-rs
+    branch: master
+    tags: true

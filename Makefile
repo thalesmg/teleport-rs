@@ -28,7 +28,7 @@ clean:
 	cargo clean -p $(PROJECT) --release
 
 teleport: $(SOURCES)
-	cargo build --release
+	cargo build --release $(CARGO_FLAGS)
 
 export POST_INST_NOTES
 install: teleport
@@ -40,3 +40,6 @@ install: teleport
 uninstall:
 	cargo uninstall --bin $(BINARY_NAME)
 	rm $(CARGO_BIN_PATH)/teleport.sh
+
+travis: CARGO_FLAGS += --target x86_64-unknown-linux-musl
+travis: teleport
