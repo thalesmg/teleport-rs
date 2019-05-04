@@ -25,6 +25,15 @@ fi
 
 Also copy `src/teleport.sh` to `$PATH_YOU_USED` and make it executable (`chmod +x teleport.sh`).
 
+## Shell completion
+
+If you use `zsh`, there is a completion file to use with `tp`. Just copy `src/completions.zsh` to any path in your `$fpath`. You can also add a new path to it. In your `$HOME/.zshrc`:
+
+```bash
+export fpath=(YOUR_PATH $fpath)
+autoload -U compinit && compinit
+```
+
 # Uninstall
 
 ```bash
