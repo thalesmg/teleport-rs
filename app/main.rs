@@ -75,6 +75,12 @@ fn main() -> Result<(), Error> {
             cfg.add_portal(alias, &destination);
             let new_blob = serde_json::to_string(&cfg)?;
             std::fs::write(cfg_file, new_blob)?;
+        } else if !destination.exists() {
+            eprintln!("destination {} does not exist!", destination.display());
+            std::process::exit(1);
+        } else if !destination.is_dir() {
+            eprintln!("destination {} is not a directory!", destination.display());
+            std::process::exit(1);
         }
     } else if let Some(matches) = matches.subcommand_matches("rm") {
         let alias = matches.value_of("portal").unwrap();
