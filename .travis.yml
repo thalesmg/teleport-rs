@@ -1,6 +1,8 @@
 language: rust
 rust:
   - stable
+  - nightly
+  - beta
 
 addons:
   apt:
@@ -30,6 +32,7 @@ deploy:
     - teleport.sh
   skip_cleanup: true
   on:
+    condition: TRAVIS_RUST_VERSION = stable
     repo: thalesmg/teleport-rs
     branch: master
     tags: true
